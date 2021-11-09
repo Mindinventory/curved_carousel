@@ -41,7 +41,6 @@ class SwipeDetector extends StatelessWidget {
   void dragEnd(event) {
     if (leftToRightSwipe != null) {
       onSwipe(leftToRightSwipe!);
-      print('SWIPE $leftToRightSwipe');
     }
     startX=null;
   }
