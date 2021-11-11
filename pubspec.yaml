@@ -1,7 +1,7 @@
 name: curved_carousel
 description: Curved Carousel
 version: 0.0.1
-homepage:
+homepage: 'https://git.mindinventory.com/github/curved-carousel'
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
