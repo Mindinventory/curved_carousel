@@ -9,6 +9,7 @@ A Flutter package for easy implementation of curved carousel.
 
 
 ``` dart
+
 CurvedCarousel(
       itemBuilder: (context, i) {
         return Item(img: listItem[i].img, selectionChange: (bool){
@@ -18,6 +19,7 @@ CurvedCarousel(
       itemCount: listItem.length,
       middleItemScaleRatio: 1.5,
 )
+
 ```
 
 ### Attributes
