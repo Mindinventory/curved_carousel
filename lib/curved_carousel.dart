@@ -1,8 +1,9 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
 import 'common/swipe_detector.dart';
+
+
+// Curved Carousel widget class.
 
 class CurvedCarousel extends StatefulWidget {
   const CurvedCarousel(
@@ -15,12 +16,21 @@ class CurvedCarousel extends StatefulWidget {
       this.middleItemScaleRatio = 1.2,
       this.disableInfiniteScrolling = false})
       : super(key: key);
+
   final Widget Function(BuildContext, int) itemBuilder;
   final int itemCount;
+  // to enable/disable infinite scrolling
   final bool disableInfiniteScrolling;
+
+  // scale middle item or not
   final bool scaleMiddleItem;
+  // provide viewport size
   final double viewPortSize;
+
+  // set curviness factor
   final double curveScale;
+
+  // selected middle item scale ratio
   final double middleItemScaleRatio;
 
   @override
@@ -62,9 +72,9 @@ class _CurvedCarouselState extends State<CurvedCarousel>
   @override
   Widget build(BuildContext context) {
     return SwipeDetector(
-      threshold: 10,
-      onSwipe: (bool) {
-        if (!bool) {
+      threshold: 5,
+      onSwipe: (bool b) {
+        if (!b) {
           // if user swipes right to left side
           if (_viewPortIndex + _visibleItemsCount < widget.itemCount ||
               !widget.disableInfiniteScrolling) {

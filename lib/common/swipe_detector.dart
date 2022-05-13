@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
-class SwipeDetector extends StatelessWidget {
-  SwipeDetector(
+class SwipeDetector extends StatefulWidget {
+  const SwipeDetector(
       {Key? key,
       required this.child,
       required this.onSwipe,
@@ -12,7 +11,14 @@ class SwipeDetector extends StatelessWidget {
   // minimum finger displacement to count as a swipe
   final double threshold;
   final void Function(bool) onSwipe;
+
+  @override
+  State<SwipeDetector> createState() => _SwipeDetectorState();
+}
+
+class _SwipeDetectorState extends State<SwipeDetector> {
   double? _offsetX;
+
   bool? leftToRightSwipe;
 
   @override
@@ -26,13 +32,13 @@ class SwipeDetector extends StatelessWidget {
 
       onHorizontalDragEnd: dragEnd,
       onVerticalDragEnd: dragEnd,
-      child: child,
+      child: widget.child,
     );
   }
 
   void dragStart(event) {
     if (_offsetX != null) {
-      if ((_offsetX! - event.globalPosition.dx).abs() > threshold) {
+      if ((_offsetX! - event.globalPosition.dx).abs() > widget.threshold) {
         leftToRightSwipe = _offsetX! < event.globalPosition.dx;
       }
     }
@@ -41,9 +47,8 @@ class SwipeDetector extends StatelessWidget {
 
   void dragEnd(event) {
     if (leftToRightSwipe != null) {
-      onSwipe(leftToRightSwipe!);
+      widget.onSwipe(leftToRightSwipe!);
     }
     _offsetX=null;
   }
-
 }
