@@ -2,7 +2,7 @@
 
 A Flutter package for easy implementation of curved carousel.
 
-![gif](curved_carousel.gif)
+![gif](curved_carousel_demo.gif)
 
 
 ### Easy to use
