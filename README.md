@@ -36,4 +36,4 @@ CurvedCarousel(
 `onChangeStart` : a function to trigger when the item change animation is start\
 `moveAutomatically` : allow to change the current selected item automatically, default is set to false. \
 `automaticMoveDelay` : the delay between automatic movements, default is 5000\
-`reverseAutomaticMovement` : reverse the direction of the automatic movement, default is false\
+`reverseAutomaticMovement` : reverse the direction of the automatic movement, default is false
