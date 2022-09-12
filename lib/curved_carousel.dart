@@ -96,8 +96,6 @@ class _CurvedCarouselState extends State<CurvedCarousel>
   void initState() {
     super.initState();
 
-    if(widget.moveAutomatically)
-    {
     // set up the automatic movement of the caroussel
     Timer.periodic(
       Duration(milliseconds: widget.automaticMoveDelay), 
@@ -107,8 +105,6 @@ class _CurvedCarouselState extends State<CurvedCarousel>
 
       movement(true, widget.reverseAutomaticMovement);
     });
-    }
-    
   }
 
   @override
