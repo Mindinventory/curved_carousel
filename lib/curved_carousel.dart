@@ -21,7 +21,7 @@ class CurvedCarousel extends StatefulWidget {
       this.onChangeEnd, 
       this.onChangeStart, 
       this.moveAutomatically = false, 
-      this.automaticMoveDelay = 20, 
+      this.automaticMoveDelay = 5000, 
       this.reverseAutomaticMovement = false
       })
       : super(key: key);
