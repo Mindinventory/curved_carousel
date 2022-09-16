@@ -1,5 +1,16 @@
 # Curved Carousel
 
+<a href="https://pub.dev/packages/curved_carousel"><img src="https://img.shields.io/pub/v/curved_carousel.svg?label=curved_carousel" alt="curved_carousel version"></a>
+<a href="https://github.com/Mindinventory/curved_carousel"><img src="https://img.shields.io/github/stars/Mindinventory/curved_carousel?style=social" alt="MIT License"></a>
+<a href="https://developer.android.com" style="pointer-events: stroke;" target="_blank">
+<img src="https://img.shields.io/badge/platform-android-blue">
+</a>
+<a href="https://developer.apple.com/ios/" style="pointer-events: stroke;" target="_blank">
+<img src="https://img.shields.io/badge/platform-iOS-blue">
+</a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="MIT License"></a>
+
+
 A Flutter package for easy implementation of curved carousel.
 
 ![gif](https://github.com/Mindinventory/curved_carousel/blob/main/curved_carousel_demo.gif)
