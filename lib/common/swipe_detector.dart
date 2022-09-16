@@ -26,10 +26,8 @@ class _SwipeDetectorState extends State<SwipeDetector> {
     return GestureDetector(
       onHorizontalDragStart: dragStart,
       onVerticalDragStart: dragStart,
-
-      onHorizontalDragDown:dragStart,
+      onHorizontalDragDown: dragStart,
       onVerticalDragDown: dragStart,
-
       onHorizontalDragEnd: dragEnd,
       onVerticalDragEnd: dragEnd,
       child: widget.child,
@@ -49,6 +47,6 @@ class _SwipeDetectorState extends State<SwipeDetector> {
     if (leftToRightSwipe != null) {
       widget.onSwipe(leftToRightSwipe!);
     }
-    _offsetX=null;
+    _offsetX = null;
   }
 }

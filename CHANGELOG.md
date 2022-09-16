@@ -1,8 +1,28 @@
-## 0.0.1
+## [0.0.7]
 
-- Initial Release.
+* Support for automatic swipe 
 
-## 0.0.2
+## [0.0.6]
 
-- Updated readme
+* Code Refactor
+
+## [0.0.5]
+
+* Minor improvement
+
+## [0.0.4]
+
+* Minor improvement
+
+## [0.0.3]
+
+* Fixed bugs
+
+## [0.0.2]
+
+* Updated readme
+
+## [0.0.1]
+
+* Initial Release.
 

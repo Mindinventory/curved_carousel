@@ -28,7 +28,6 @@ class CurvedCarouselDemo extends StatefulWidget {
 }
 
 class _CurvedCarouselDemoState extends State<CurvedCarouselDemo> {
-
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -57,12 +56,14 @@ class _CurvedCarouselDemoState extends State<CurvedCarouselDemo> {
         children: [
           SizedBox(
             height: 200,
-            child: CurvedCarousel(itemBuilder: (_ , i ) {
-              return CircleAvatar(
-                radius: 20,
-                backgroundColor: Colors.primaries[i%Colors.primaries.length],
-              );
-            },
+            child: CurvedCarousel(
+              itemBuilder: (_, i) {
+                return CircleAvatar(
+                  radius: 20,
+                  backgroundColor:
+                      Colors.primaries[i % Colors.primaries.length],
+                );
+              },
               itemCount: 10,
             ),
           )

@@ -1,6 +1,6 @@
 name: curved_carousel
 description: Curved Casrousel shows list of widgets in curve fashion.
-version: 0.0.5
+version: 0.0.7
 homepage: 'https://github.com/Mindinventory/curved_carousel'
 
 environment:
