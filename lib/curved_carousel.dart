@@ -95,9 +95,9 @@ class _CurvedCarouselState extends State<CurvedCarousel>
   void initState() {
     super.initState();
 
-    // set up the automatic movement of the caroussel
+    // set up the automatic movement of the carousel
     Timer.periodic(Duration(milliseconds: widget.automaticMoveDelay), (timer) {
-      // do not execute the movement if the moveAutomaticly is false
+      // do not execute the movement if the moveAutomatically is false
       if (!widget.moveAutomatically) return;
 
       movement(true, widget.reverseAutomaticMovement);
@@ -129,13 +129,13 @@ class _CurvedCarouselState extends State<CurvedCarousel>
       threshold: 1,
       onSwipe: (bool b) {
         if (!b) {
-          // if user swipes right to left side
+          /// If user swipes right to left side
           if (_viewPortIndex + _visibleItemsCount < widget.itemCount ||
               !widget.disableInfiniteScrolling) {
             movement(false, false);
           }
         } else {
-          // if user swipes left to right side
+          /// If user swipes left to right side
           if (_viewPortIndex > 0 || !widget.disableInfiniteScrolling) {
             movement(false, true);
           }
@@ -149,7 +149,7 @@ class _CurvedCarouselState extends State<CurvedCarousel>
           tween: Tween<double>(begin: 0, end: 1),
           duration: Duration(milliseconds: widget.animationDuration),
           onEnd: () {
-            // when the animation end trigger the on changed end function if set
+            /// When the animation end trigger the on changed end function if set
             if (widget.onChangeEnd != null) {
               widget.onChangeEnd!
                   .call(_currentItemIndex, _currentMovementIsAuto);
@@ -224,7 +224,7 @@ class _CurvedCarouselState extends State<CurvedCarousel>
   }
 
   double interpolate(double prev, double current, double progress) {
-    //progress will be between 0 and 1 !!
+    /// progress will be between 0 and 1 !!
     return (prev + (progress * (current - prev)));
   }
 
@@ -240,7 +240,7 @@ class _CurvedCarouselState extends State<CurvedCarousel>
 
   double getCurveX(
       int i, double itemWidth, int visibleItemCount, double value) {
-    // calculate the correct padding to space element correctly when curved
+    /// Calculating the correct padding to space element correctly when curved
     int middleItemIndex = visibleItemCount ~/ 2;
     double centerPaddingCorrection = (i < middleItemIndex
             ? -i
@@ -255,7 +255,7 @@ class _CurvedCarouselState extends State<CurvedCarousel>
             : -widget.horizontalPadding;
     double finalPadding = centerPaddingCorrection + horizontalPadding / 2;
 
-    // calculate the correct padding for the previous position in the interpolate during an animation
+    /// Calculating the correct padding for the previous position in the interpolate during an animation
     int direction = _forward != null && _forward! == false ? 1 : -1;
     int transitionMiddleItemIndex = visibleItemCount ~/ 2 + direction;
     double transitionCenterPaddingCorrection = (i < transitionMiddleItemIndex
@@ -273,7 +273,7 @@ class _CurvedCarouselState extends State<CurvedCarousel>
     double finalTransitionPadding =
         transitionCenterPaddingCorrection + transitionHorizontalPadding / 2;
 
-    // add a padding to element added for animation purposes
+    /// Adding a padding to element added for animation purposes
     if (i == -1 || i == visibleItemCount) {
       centerPaddingCorrection =
           (visibleItemCount == i ? -1 : 1) * widget.curveScale / 2 -
@@ -333,15 +333,16 @@ class _CurvedCarouselState extends State<CurvedCarousel>
     }
   }
 
-  /// trigger a movement
+  /// Trigger a movement
   /// automaticMovement: if true set the current movement is auto variable to true
   /// reverse : if false move to the left if true move to right
   void movement(bool automaticMovement, bool reverse) {
     _currentMovementIsAuto = automaticMovement;
-    if (reverse)
+    if (reverse) {
       moveLeft();
-    else
+    } else {
       moveRight();
+    }
   }
 
   void moveRight() {
@@ -351,8 +352,9 @@ class _CurvedCarouselState extends State<CurvedCarousel>
     _forward = true;
     updateCurrentIndex();
     // call the on change started function if set
-    if (widget.onChangeStart != null)
+    if (widget.onChangeStart != null) {
       widget.onChangeStart!.call(_currentItemIndex, _currentMovementIsAuto);
+    }
   }
 
   void moveLeft() {
@@ -365,8 +367,9 @@ class _CurvedCarouselState extends State<CurvedCarousel>
     _forward = false;
     updateCurrentIndex();
     // call the on change started function if set
-    if (widget.onChangeStart != null)
+    if (widget.onChangeStart != null) {
       widget.onChangeStart!.call(_currentItemIndex, _currentMovementIsAuto);
+    }
   }
 }
 
