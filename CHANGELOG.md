@@ -1,3 +1,8 @@
+## [0.0.8]
+
+* Added support for vertical listing
+* Update to latest version
+
 ## [0.0.7]
 
 * Support for automatic swipe 

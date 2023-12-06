@@ -13,7 +13,7 @@
 
 A Flutter package for easy implementation of curved carousel.
 
-![gif](https://github.com/Mindinventory/curved_carousel/blob/main/curved_carousel_demo.gif)
+![gif](https://github.com/Mindinventory/curved_carousel/blob/main/ezgif.com-video-to-gif-horizontal.gif)
 
 
 ### Easy to use
@@ -47,4 +47,5 @@ CurvedCarousel(
 `onChangeStart` : a function to trigger when the item change animation is start\
 `moveAutomatically` : allow to change the current selected item automatically, default is set to false. \
 `automaticMoveDelay` : the delay between automatic movements, default is 5000\
-`reverseAutomaticMovement` : reverse the direction of the automatic movement, default is false
+`reverseAutomaticMovement` : reverse the direction of the automatic movement, default is false\
+`horizontal` : To enable or disable vertical listing of the item. By default is is set to true.

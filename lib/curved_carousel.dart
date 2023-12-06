@@ -22,7 +22,8 @@ class CurvedCarousel extends StatefulWidget {
       this.onChangeStart,
       this.moveAutomatically = false,
       this.automaticMoveDelay = 5000,
-      this.reverseAutomaticMovement = false})
+      this.reverseAutomaticMovement = false,
+      this.horizontal = true})
       : super(key: key);
 
   final Widget Function(BuildContext, int) itemBuilder;
@@ -75,12 +76,14 @@ class CurvedCarousel extends StatefulWidget {
   /// If this attribut is [true] then the movement will move the items backward.
   final bool reverseAutomaticMovement;
 
+  /// To enable or disable vertical listing of the item. By default is is set to true.
+  final bool horizontal;
+
   @override
   _CurvedCarouselState createState() => _CurvedCarouselState();
 }
 
-class _CurvedCarouselState extends State<CurvedCarousel>
-    with SingleTickerProviderStateMixin {
+class _CurvedCarouselState extends State<CurvedCarousel> with SingleTickerProviderStateMixin {
   late int _selectedItemIndex;
   late int _visibleItemsCount;
   bool? _forward;
@@ -111,8 +114,7 @@ class _CurvedCarouselState extends State<CurvedCarousel>
     _itemWidth = (MediaQuery.of(context).size.width / _itemsCount);
     _visibleItemsCount = MediaQuery.of(context).size.width ~/ _itemWidth;
     if (_visibleItemsCount % 2 == 0) {
-      if (_itemWidth * (_visibleItemsCount + 0.5) <=
-          MediaQuery.of(context).size.width) {
+      if (_itemWidth * (_visibleItemsCount + 0.5) <= MediaQuery.of(context).size.width) {
         _visibleItemsCount++;
       } else {
         _visibleItemsCount--;
@@ -127,19 +129,35 @@ class _CurvedCarouselState extends State<CurvedCarousel>
   Widget build(BuildContext context) {
     return SwipeDetector(
       threshold: 1,
-      onSwipe: (bool b) {
-        if (!b) {
-          /// If user swipes right to left side
-          if (_viewPortIndex + _visibleItemsCount < widget.itemCount ||
-              !widget.disableInfiniteScrolling) {
-            movement(false, false);
+      onSwipe: (bool b, bool upToDownSwiped) {
+        if(upToDownSwiped && !widget.horizontal){
+          if (b) {
+            /// If user swipes up to down side
+            if (_viewPortIndex > 0 || !widget.disableInfiniteScrolling) {
+              movement(false, true);
+            }
+          } else {
+            /// If user swipes down to up side
+            if (_viewPortIndex + _visibleItemsCount < widget.itemCount || !widget.disableInfiniteScrolling) {
+              movement(false, false);
+            }
           }
         } else {
-          /// If user swipes left to right side
-          if (_viewPortIndex > 0 || !widget.disableInfiniteScrolling) {
-            movement(false, true);
+          if(!upToDownSwiped && widget.horizontal){
+            if (!b) {
+              /// If user swipes right to left side
+              if (_viewPortIndex + _visibleItemsCount < widget.itemCount || !widget.disableInfiniteScrolling) {
+                movement(false, false);
+              }
+            } else {
+              /// If user swipes left to right side
+              if (_viewPortIndex > 0 || !widget.disableInfiniteScrolling) {
+                movement(false, true);
+              }
+            }
           }
         }
+
       },
       child: FractionallySizedBox(
         widthFactor: 1,
@@ -151,8 +169,7 @@ class _CurvedCarouselState extends State<CurvedCarousel>
           onEnd: () {
             /// When the animation end trigger the on changed end function if set
             if (widget.onChangeEnd != null) {
-              widget.onChangeEnd!
-                  .call(_currentItemIndex, _currentMovementIsAuto);
+              widget.onChangeEnd!.call(_currentItemIndex, _currentMovementIsAuto);
             }
           },
           builder: (context, double value, child) {
@@ -162,45 +179,48 @@ class _CurvedCarouselState extends State<CurvedCarousel>
                 // All visible items in viewport
                 for (int i = 0; i < _visibleItemsCount; i++)
                   AnimatedItem(
-                    offset: Offset(
-                      getCurveX(i, _itemWidth, _visibleItemsCount, value),
-                      getCurveY(i, _itemWidth, value),
-                    ),
-                    angle: widget.tiltItemWithcurve
-                        ? getAngle(i, _itemWidth, value)
-                        : 0,
+                    offset: widget.horizontal
+                        ? Offset(
+                            getCurveX(i, _itemWidth, _visibleItemsCount, value),
+                            getCurveY(i, _itemWidth, value),
+                          )
+                        : Offset(
+                            getCurveY(i, _itemWidth, value),
+                            getCurveX(i, _itemWidth, _visibleItemsCount, value),
+                          ),
+                    angle: widget.tiltItemWithcurve ? getAngle(i, _itemWidth, value) : 0,
                     scale: getItemScale(i, value),
-                    child: widget.itemBuilder(
-                        context, (i + _viewPortIndex) % widget.itemCount),
+                    child: widget.itemBuilder(context, (i + _viewPortIndex) % widget.itemCount),
                   ),
                 if (_forward != null && _forward! && value < 0.9)
                   AnimatedItem(
-                    offset: Offset(
-                      getCurveX(-1, _itemWidth, _visibleItemsCount, value),
-                      getCurveY(-1, _itemWidth, value),
-                    ),
-                    angle: widget.tiltItemWithcurve
-                        ? getAngle(-1, _itemWidth, value)
-                        : 0,
+                    offset: widget.horizontal
+                        ? Offset(
+                            getCurveX(-1, _itemWidth, _visibleItemsCount, value),
+                            getCurveY(-1, _itemWidth, value),
+                          )
+                        : Offset(
+                            getCurveY(-1, _itemWidth, value),
+                            getCurveX(-1, _itemWidth, _visibleItemsCount, value),
+                          ),
+                    angle: widget.tiltItemWithcurve ? getAngle(-1, _itemWidth, value) : 0,
                     scale: getItemScale(-1, value),
-                    child: widget.itemBuilder(
-                        context, (_viewPortIndex - 1) % widget.itemCount),
+                    child: widget.itemBuilder(context, (_viewPortIndex - 1) % widget.itemCount),
                   ),
                 if (_forward != null && !_forward! && value < 0.9)
                   AnimatedItem(
-                    offset: Offset(
-                      getCurveX(_visibleItemsCount, _itemWidth,
-                          _visibleItemsCount, value),
-                      getCurveY(_visibleItemsCount, _itemWidth, value),
-                    ),
-                    angle: widget.tiltItemWithcurve
-                        ? getAngle(_visibleItemsCount, _itemWidth, value)
-                        : 0,
+                    offset: widget.horizontal
+                        ? Offset(
+                            getCurveX(_visibleItemsCount, _itemWidth, _visibleItemsCount, value),
+                            getCurveY(_visibleItemsCount, _itemWidth, value),
+                          )
+                        : Offset(
+                            getCurveY(_visibleItemsCount, _itemWidth, value),
+                            getCurveX(_visibleItemsCount, _itemWidth, _visibleItemsCount, value),
+                          ),
+                    angle: widget.tiltItemWithcurve ? getAngle(_visibleItemsCount, _itemWidth, value) : 0,
                     scale: getItemScale(_visibleItemsCount, value),
-                    child: widget.itemBuilder(
-                        context,
-                        (_viewPortIndex + _visibleItemsCount) %
-                            widget.itemCount),
+                    child: widget.itemBuilder(context, (_viewPortIndex + _visibleItemsCount) % widget.itemCount),
                   )
               ],
             );
@@ -213,8 +233,7 @@ class _CurvedCarouselState extends State<CurvedCarousel>
   /// calculate the current index of item to update it
   void updateCurrentIndex() {
     if (_forward != null) {
-      _currentItemIndex =
-          _forward! == true ? _currentItemIndex + 1 : _currentItemIndex - 1;
+      _currentItemIndex = _forward! == true ? _currentItemIndex + 1 : _currentItemIndex - 1;
       _currentItemIndex = _currentItemIndex < 0
           ? widget.itemCount - 1
           : _currentItemIndex == widget.itemCount
@@ -232,14 +251,10 @@ class _CurvedCarouselState extends State<CurvedCarousel>
     if (_selectedItemIndex == i) {
       return 0;
     }
-    return -((i - _selectedItemIndex).abs() *
-            (i - _selectedItemIndex).abs() *
-            widget.curveScale)
-        .toDouble();
+    return -((i - _selectedItemIndex).abs() * (i - _selectedItemIndex).abs() * widget.curveScale).toDouble();
   }
 
-  double getCurveX(
-      int i, double itemWidth, int visibleItemCount, double value) {
+  double getCurveX(int i, double itemWidth, int visibleItemCount, double value) {
     /// Calculating the correct padding to space element correctly when curved
     int middleItemIndex = visibleItemCount ~/ 2;
     double centerPaddingCorrection = (i < middleItemIndex
@@ -262,28 +277,23 @@ class _CurvedCarouselState extends State<CurvedCarousel>
             ? -i + direction
             : i == transitionMiddleItemIndex
                 ? 0
-                : -(i + direction - transitionMiddleItemIndex) +
-                    transitionMiddleItemIndex) *
+                : -(i + direction - transitionMiddleItemIndex) + transitionMiddleItemIndex) *
         widget.curveScale;
     double transitionHorizontalPadding = i < transitionMiddleItemIndex
         ? widget.horizontalPadding
         : i == transitionMiddleItemIndex
             ? -widget.horizontalPadding / 4
             : -widget.horizontalPadding;
-    double finalTransitionPadding =
-        transitionCenterPaddingCorrection + transitionHorizontalPadding / 2;
+    double finalTransitionPadding = transitionCenterPaddingCorrection + transitionHorizontalPadding / 2;
 
     /// Adding a padding to element added for animation purposes
     if (i == -1 || i == visibleItemCount) {
-      centerPaddingCorrection =
-          (visibleItemCount == i ? -1 : 1) * widget.curveScale / 2 -
-              horizontalPadding;
+      centerPaddingCorrection = (visibleItemCount == i ? -1 : 1) * widget.curveScale / 2 - horizontalPadding;
     }
 
     if (_forward != null) {
       double interpolatedValue = interpolate(
-          -(_selectedItemIndex - i - (_forward! ? 1 : -1)) * itemWidth +
-              finalTransitionPadding,
+          -(_selectedItemIndex - i - (_forward! ? 1 : -1)) * itemWidth + finalTransitionPadding,
           -(_selectedItemIndex - i) * itemWidth + finalPadding,
           value);
       return interpolatedValue;
@@ -293,8 +303,7 @@ class _CurvedCarouselState extends State<CurvedCarousel>
 
   double getCurveY(int i, double itemWidth, double value) {
     if (_forward != null) {
-      return interpolate(
-          getCurvePoint(i + (_forward! ? 1 : -1)), getCurvePoint(i), value);
+      return interpolate(getCurvePoint(i + (_forward! ? 1 : -1)), getCurvePoint(i), value);
     }
     return getCurvePoint(i);
   }
@@ -303,14 +312,12 @@ class _CurvedCarouselState extends State<CurvedCarousel>
     if (_selectedItemIndex == i) {
       return 0;
     }
-    return -((i - _selectedItemIndex) * pi / (widget.curveScale + 5))
-        .toDouble();
+    return -((i - _selectedItemIndex) * pi / (widget.curveScale + 5)).toDouble();
   }
 
   double getAngle(int i, double itemWidth, double value) {
     if (_lastViewPortIndex != -1) {
-      return interpolate(
-          getAngleValue(i + (_forward! ? 1 : -1)), getAngleValue(i), value);
+      return interpolate(getAngleValue(i + (_forward! ? 1 : -1)), getAngleValue(i), value);
     }
     return getAngleValue(i);
   }
@@ -379,12 +386,7 @@ class AnimatedItem extends StatelessWidget {
   final double scale;
   final Widget child;
 
-  const AnimatedItem(
-      {Key? key,
-      required this.offset,
-      required this.angle,
-      required this.scale,
-      required this.child})
+  const AnimatedItem({Key? key, required this.offset, required this.angle, required this.scale, required this.child})
       : super(key: key);
 
   @override

@@ -55,7 +55,7 @@ class _CurvedCarouselDemoState extends State<CurvedCarouselDemo> {
       body: Column(
         children: [
           SizedBox(
-            height: 200,
+            height: 300,
             child: CurvedCarousel(
               itemBuilder: (_, i) {
                 return CircleAvatar(
@@ -65,6 +65,7 @@ class _CurvedCarouselDemoState extends State<CurvedCarouselDemo> {
                 );
               },
               itemCount: 10,
+              horizontal: true,
             ),
           )
         ],
