@@ -13,7 +13,14 @@
 
 A Flutter package for easy implementation of curved carousel.
 
-![gif](https://github.com/Mindinventory/curved_carousel/blob/main/ezgif.com-video-to-gif-horizontal.gif)
+<table>
+  <tr>
+    <td>![gif]<img src="https://github.com/Mindinventory/curved_carousel/blob/development/ezgif.com-video-to-gif-horizontal.gif"</td>
+    <td>![gif]<img src="https://github.com/Mindinventory/curved_carousel/blob/development/ezgif.com-video-to-gif-vertical.gif"</td>
+  </tr>
+ </table>
+
+
 
 
 ### Easy to use
