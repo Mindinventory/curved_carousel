@@ -13,7 +13,7 @@
 
 A Flutter package for easy implementation of curved carousel.
 
-![gif](https://github.com/Mindinventory/curved_carousel/blob/main/curved_carousel_demo.gif)
+![gif](https://raw.githubusercontent.com/Mindinventory/curved_carousel/main/curved_carousel_demo.gif)
 
 
 ### Easy to use
